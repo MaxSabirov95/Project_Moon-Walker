@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Moon.unity
+    guid: 5b0589298c09b3b4fbc574fc748e9db4
+  - enabled: 1
+    path: Assets/Scenes/MoonCave1.unity
+    guid: bf1d04a9ba97a694bbc1d54172157ae6
   m_configObjects: {}
