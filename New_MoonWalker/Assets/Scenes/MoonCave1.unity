@@ -1588,6 +1588,6 @@ MonoBehaviour:
   startFirePosition: {fileID: 1130878841}
   bullet: {fileID: 3407443197479284066, guid: fc0414b310527314ab0fa8a1ea538c28, type: 3}
   cam: {fileID: 14406834}
-  maxWeaponBullets: 0
+  maxWeaponBullets: 5
   currentBulletsInWeapon: 0
   textBulletsWeapon: {fileID: 1212406815}
