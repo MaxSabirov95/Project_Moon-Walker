@@ -12,17 +12,21 @@ public class PlayerUI : MonoBehaviour
     public OxygenBar oxygenBar;
     public XpBar xpBar;
 
+    public GameObject playerUpgradeBoard;
+
     public float playerEnergy;
     public float playerHP;
     public float playerOxygen;
     public float playerXp;
     public int playerLevel;
+    public int skillPoints=0;
 
     public float minusOxygen;
     public float plusOxygen;
     public float plusHP;
 
     public Text textPlayerLevel;
+    public Text textNumberOfSkillPoints;
 
     public int speedUpHpAndEnergy;
 
@@ -44,16 +48,18 @@ public class PlayerUI : MonoBehaviour
     }
     void Start()
     {
+        playerUpgradeBoard.SetActive(false);
         textPlayerLevel.GetComponent<Text>().text = "" + playerLevel.ToString("f0");
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Moon"))
-        {
-            LoadPlayerData();
-        }
+        textNumberOfSkillPoints.GetComponent<Text>().text = "" + skillPoints.ToString("f0");
+        //if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Moon"))
+        //{
+        //    LoadPlayerData();
+        //}
 
-        else
-        {
-            LoadPlayerUIData();
-        }
+        //else
+        //{
+        //    LoadPlayerUIData();
+        //}
     }
 
     void Update()
@@ -68,6 +74,11 @@ public class PlayerUI : MonoBehaviour
         if (!BlackBoard.enterToPlaces.inSpaceShip)
         {
             OutSpaceShip();
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            playerUpgradeBoard.SetActive(true);
         }
     }
 
@@ -95,33 +106,33 @@ public class PlayerUI : MonoBehaviour
         Bars();
     }
 
-    public void SavePlayerData()
-    {
-        SaveSystem.SaveData(this);
-    }
+    //public void SavePlayerData()
+    //{
+    //    SaveSystem.SaveData(this);
+    //}
 
-    public void LoadPlayerData()
-    {
-        GameData data = SaveSystem.LoadData();
+    //public void LoadPlayerData()
+    //{
+    //    GameData data = SaveSystem.LoadData();
 
-        Vector2 position;
-        position.x=data.playerPosition[0];
-        position.y=data.playerPosition[1];
-        transform.position = new Vector2(position.x, position.y);
+    //    Vector2 position;
+    //    position.x=data.playerPosition[0];
+    //    position.y=data.playerPosition[1];
+    //    transform.position = new Vector2(position.x, position.y);
 
-        LoadPlayerUIData();
-    }
-    public void LoadPlayerUIData()
-    {
-        GameData data = SaveSystem.LoadData();
-        playerHP = data.playerHP;
-        playerEnergy = data.playerEnergy;
-        playerOxygen = data.playerOxygen;
-        playerXp = data.playerXp;
-        playerLevel = data.playerLevel;
+    //    LoadPlayerUIData();
+    //}
+    //public void LoadPlayerUIData()
+    //{
+    //    GameData data = SaveSystem.LoadData();
+    //    playerHP = data.playerHP;
+    //    playerEnergy = data.playerEnergy;
+    //    playerOxygen = data.playerOxygen;
+    //    playerXp = data.playerXp;
+    //    playerLevel = data.playerLevel;
 
-        Bars();
-    }
+    //    Bars();
+    //}
 
     void Bars()
     {
@@ -162,6 +173,8 @@ public class PlayerUI : MonoBehaviour
         if (playerXp >= playerStats.maxPlayerXP)
         {
             playerLevel++;
+            skillPoints += 10;
+            textNumberOfSkillPoints.GetComponent<Text>().text = "" + skillPoints.ToString("f0");
             playerXp -= playerStats.maxPlayerXP;
             xpBar.SetXp(playerXp);
             playerStats.maxPlayerXP *= 1.05f;

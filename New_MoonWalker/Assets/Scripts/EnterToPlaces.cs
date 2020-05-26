@@ -65,7 +65,7 @@ public class EnterToPlaces : MonoBehaviour
                     case placesToEnter.Cave1:
                         player.SetActive(false);
                         enterTheCave.gameObject.SetActive(false);
-                        BlackBoard.playerUI.SavePlayerData();
+                        //BlackBoard.playerUI.SavePlayerData();
                         BlackBoard.scenesLoad.loadLevel(1);
                         break;
                     case placesToEnter.SpaceShip:

@@ -58,7 +58,7 @@ public class ExitPlace : MonoBehaviour
     IEnumerator LoadLevel()
     {
         yield return new WaitForSeconds(1f);
-        BlackBoard.playerUI.LoadPlayerData();
+        //BlackBoard.playerUI.LoadPlayerData();
         //-- For animation between scenes
     }
 
