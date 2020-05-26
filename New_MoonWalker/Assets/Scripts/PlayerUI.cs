@@ -59,11 +59,11 @@ public class PlayerUI : MonoBehaviour
     void Update()
     {
         textPlayerLevel.GetComponent<Text>().text = "" + playerLevel.ToString("f0");
-        if (playerEnergy < playerStats.maxPlayerEnergy)
-        {
-            playerEnergy += (Time.deltaTime / speedUpHpAndEnergy);
-            Bars();
-        }
+        //if (playerEnergy < playerStats.maxPlayerEnergy)
+        //{
+        //    playerEnergy += (Time.deltaTime / speedUpHpAndEnergy);
+        //    Bars();
+        //}
 
         if (!BlackBoard.enterToPlaces.inSpaceShip)
         {
@@ -73,8 +73,14 @@ public class PlayerUI : MonoBehaviour
 
     public void InSpaceShip()
     {
-        playerOxygen += (plusOxygen * Time.deltaTime);
-        playerHP += (plusHP * Time.deltaTime);
+        if (playerOxygen < playerStats.maxPlayerOxygen)
+        {
+            playerOxygen += (plusOxygen * Time.deltaTime);
+        }
+        if (playerHP < playerStats.maxPlayerHP)
+        {
+            playerHP += (plusHP * Time.deltaTime);
+        }
         Bars();
     }
 
@@ -93,6 +99,7 @@ public class PlayerUI : MonoBehaviour
     {
         SaveSystem.SaveData(this);
     }
+
     public void LoadPlayerData()
     {
         GameData data = SaveSystem.LoadData();
