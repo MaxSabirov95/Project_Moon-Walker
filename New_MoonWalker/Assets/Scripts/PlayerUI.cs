@@ -134,7 +134,7 @@ public class PlayerUI : MonoBehaviour
     //    Bars();
     //}
 
-    void Bars()
+    public void Bars()
     {
         energyBar.SetEnergy(playerEnergy);
         healthBar.SetHealth(playerHP);
