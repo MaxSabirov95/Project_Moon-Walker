@@ -7,6 +7,7 @@ public class EnterToPlaces : MonoBehaviour
 {
     public enum placesToEnter {Cave1, Cave2 , Cave3 , Cave4, SpaceShip };
     public placesToEnter enterPlace;
+    public Animator playerSleepMode;
 
     public GameObject player;
     public Text enterSpaceShip;
@@ -27,9 +28,11 @@ public class EnterToPlaces : MonoBehaviour
     {
         if (inSpaceShip)
         {
+            playerSleepMode.SetBool("InSpaceShip",true);
             BlackBoard.playerUI.InSpaceShip();
             if (Input.GetKeyDown(KeyCode.E))
             {
+                playerSleepMode.SetBool("InSpaceShip", false);
                 inSpaceShip = false;
                 player.SetActive(true);
                 enterSpaceShip.gameObject.SetActive(true);
