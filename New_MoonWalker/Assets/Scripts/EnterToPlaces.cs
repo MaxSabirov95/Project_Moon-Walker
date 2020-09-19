@@ -15,6 +15,7 @@ public class EnterToPlaces : MonoBehaviour
     public Text enterTheCave;
 
     public bool inSpaceShip;
+    bool canEnter=false;
 
     private void Start()
     {
@@ -30,16 +31,41 @@ public class EnterToPlaces : MonoBehaviour
         {
             playerSleepMode.SetBool("InSpaceShip",true);
             BlackBoard.playerUI.InSpaceShip();
-            if (Input.GetKeyDown(KeyCode.E))
+        }
+
+        if (canEnter)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                playerSleepMode.SetBool("InSpaceShip", false);
-                inSpaceShip = false;
-                player.SetActive(true);
-                enterSpaceShip.gameObject.SetActive(true);
-                exitSpaceShip.gameObject.SetActive(false);
+                switch (enterPlace)
+                {
+                    case placesToEnter.Cave1:
+                        player.SetActive(false);
+                        enterTheCave.gameObject.SetActive(false);
+                        //BlackBoard.playerUI.SavePlayerData();
+                        BlackBoard.scenesLoad.loadLevel(1);
+                        break;
+
+                    case placesToEnter.SpaceShip:
+                        if (!inSpaceShip)
+                        {
+                            inSpaceShip = true;
+                            player.SetActive(false);
+                            enterSpaceShip.gameObject.SetActive(false);
+                            exitSpaceShip.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            playerSleepMode.SetBool("InSpaceShip", false);
+                            inSpaceShip = false;
+                            player.SetActive(true);
+                            enterSpaceShip.gameObject.SetActive(true);
+                            exitSpaceShip.gameObject.SetActive(false);
+                        }
+                        break;
+                }
             }
         }
-        
     }
     private void OnTriggerEnter2D(Collider2D Place)
     {
@@ -61,27 +87,7 @@ public class EnterToPlaces : MonoBehaviour
     {
         if (Place.CompareTag("Player"))
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                switch (enterPlace)
-                {
-                    case placesToEnter.Cave1:
-                        player.SetActive(false);
-                        enterTheCave.gameObject.SetActive(false);
-                        //BlackBoard.playerUI.SavePlayerData();
-                        BlackBoard.scenesLoad.loadLevel(1);
-                        break;
-                    case placesToEnter.SpaceShip:
-                        if (!inSpaceShip)
-                        {
-                            inSpaceShip = true;
-                            player.SetActive(false);
-                            enterSpaceShip.gameObject.SetActive(false);
-                            exitSpaceShip.gameObject.SetActive(true);
-                        }
-                        break;
-                }
-            }
+            canEnter = true;
         }
     }
 
@@ -91,6 +97,14 @@ public class EnterToPlaces : MonoBehaviour
         {
             enterTheCave.gameObject.SetActive(false);
             enterSpaceShip.gameObject.SetActive(false);
+            if (inSpaceShip)
+            {
+                canEnter = true;
+            }
+            else
+            {
+                canEnter = false;
+            }
         }
     }
 }

@@ -47,6 +47,8 @@ public class PlayerUpgrade : MonoBehaviour
             BlackBoard.playerUI.skillPoints -= plusOneBulletCoast;
             plusOneBulletCoast++;
             Prices();
+            BlackBoard.gun.maxWeaponBullets++;
+            BlackBoard.gun.UpdateBullets();
         }
     }
 
@@ -66,5 +68,6 @@ public class PlayerUpgrade : MonoBehaviour
         textOxygenCost.GetComponent<Text>().text = "Cost " + oxygenCost.ToString();
         textPlusOneBulletCoast.GetComponent<Text>().text = "Cost " + plusOneBulletCoast.ToString();
         textMinusReloadTime.GetComponent<Text>().text = "Cost " + minusReloadTime.ToString();
+        BlackBoard.playerUI.textNumberOfSkillPoints.GetComponent<Text>().text = "" + BlackBoard.playerUI.skillPoints.ToString("f0");
     }
 }

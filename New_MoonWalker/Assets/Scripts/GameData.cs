@@ -16,7 +16,6 @@ public class GameData
     public GameData(PlayerUI player)
     {
         playerHP = player.playerHP;
-        playerEnergy = player.playerEnergy;
         playerOxygen = player.playerOxygen;
         playerXp = player.playerXp;
         playerLevel = player.playerLevel;

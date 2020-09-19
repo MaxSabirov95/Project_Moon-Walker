@@ -18,9 +18,10 @@ public class GunFlip : MonoBehaviour
 
     private void Start()
     {
+        BlackBoard.gun = this;
         currentBulletsInWeapon = maxWeaponBullets;
         canShoot = true;
-        textBulletsWeapon.GetComponent<Text>().text = "" + currentBulletsInWeapon.ToString("f0") + "/" + maxWeaponBullets.ToString("f0");
+        UpdateBullets();
     }
     void Update()
     {
@@ -51,7 +52,7 @@ public class GunFlip : MonoBehaviour
         if (currentBulletsInWeapon < maxWeaponBullets)
         {
             currentBulletsInWeapon += (Time.deltaTime/3);
-            textBulletsWeapon.GetComponent<Text>().text = "" + ((int)currentBulletsInWeapon).ToString("f0") + "/" + maxWeaponBullets.ToString("f0");
+            UpdateBullets();
         }
         if(currentBulletsInWeapon <= 0)
         {
@@ -66,5 +67,10 @@ public class GunFlip : MonoBehaviour
         textBulletsWeapon.GetComponent<Text>().text = "" + currentBulletsInWeapon.ToString("f0") + "/" + maxWeaponBullets.ToString("f0");
         yield return new WaitForSeconds(1f);
         canShoot = true;
+    }
+
+    public void UpdateBullets()
+    {
+        textBulletsWeapon.GetComponent<Text>().text = "" + currentBulletsInWeapon.ToString("f0") + "/" + maxWeaponBullets.ToString("f0");
     }
 }

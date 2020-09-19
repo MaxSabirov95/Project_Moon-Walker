@@ -9,4 +9,5 @@ public class BlackBoard
     public static DistanceBetweenSpaceShipAndPlayer spaceShip;
     public static EnterToPlaces enterToPlaces;
     public static PlayerMovement playerMovement;
+    public static GunFlip gun;
 }

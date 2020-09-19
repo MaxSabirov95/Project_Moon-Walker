@@ -8,13 +8,12 @@ public class PlayerUI : MonoBehaviour
 {
     public PlayerStats playerStats;
     public HpBar healthBar;
-    public EnergyBar energyBar;
     public OxygenBar oxygenBar;
     public XpBar xpBar;
 
     public GameObject playerUpgradeBoard;
+    bool _playerUpgradeBoard;
 
-    public float playerEnergy;
     public float playerHP;
     public float playerOxygen;
     public float playerXp;
@@ -35,20 +34,17 @@ public class PlayerUI : MonoBehaviour
         BlackBoard.playerUI = this;
 
         playerHP = playerStats.maxPlayerHP;
-        playerEnergy = playerStats.maxPlayerEnergy;
         playerOxygen = playerStats.maxPlayerOxygen;
 
         healthBar.SetMaxValue(playerStats.maxPlayerHP);
-        energyBar.SetMaxValue(playerStats.maxPlayerEnergy);
         oxygenBar.SetMaxValue(playerStats.maxPlayerOxygen);
         xpBar.SetXp(playerXp);
 
         playerLevel = 1;
-
     }
     void Start()
     {
-        playerUpgradeBoard.SetActive(false);
+        playerUpgradeBoard.SetActive(_playerUpgradeBoard);
         textPlayerLevel.GetComponent<Text>().text = "" + playerLevel.ToString("f0");
         textNumberOfSkillPoints.GetComponent<Text>().text = "" + skillPoints.ToString("f0");
         //if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Moon"))
@@ -65,11 +61,6 @@ public class PlayerUI : MonoBehaviour
     void Update()
     {
         textPlayerLevel.GetComponent<Text>().text = "" + playerLevel.ToString("f0");
-        //if (playerEnergy < playerStats.maxPlayerEnergy)
-        //{
-        //    playerEnergy += (Time.deltaTime / speedUpHpAndEnergy);
-        //    Bars();
-        //}
 
         if (!BlackBoard.enterToPlaces.inSpaceShip)
         {
@@ -78,7 +69,8 @@ public class PlayerUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            playerUpgradeBoard.SetActive(true);
+            _playerUpgradeBoard = !_playerUpgradeBoard;
+            playerUpgradeBoard.SetActive(_playerUpgradeBoard);
         }
     }
 
@@ -136,9 +128,7 @@ public class PlayerUI : MonoBehaviour
 
     public void Bars()
     {
-        energyBar.SetEnergy(playerEnergy);
         healthBar.SetHealth(playerHP);
-        energyBar.SetEnergy(playerEnergy);
         oxygenBar.SetOxygen(playerOxygen);
         xpBar.SetXp(playerXp);
     }
@@ -155,11 +145,6 @@ public class PlayerUI : MonoBehaviour
     public void minusHpButton()
     {
         healthBar.SetHealth(playerHP -= 10);
-    }
-
-    public void minusEnergyButton()
-    {
-        energyBar.SetEnergy(playerEnergy -= 10);
     }
 
     public void minusOxygenButton()
