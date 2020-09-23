@@ -10,4 +10,5 @@ public class BlackBoard
     public static EnterToPlaces enterToPlaces;
     public static PlayerMovement playerMovement;
     public static GunFlip gun;
+    public static BulletForce bullet;
 }

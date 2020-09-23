@@ -13,12 +13,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        Physics2D.IgnoreLayerCollision(9, 8);
         isJumping = false;
         rb2D = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
         {
             Jump();

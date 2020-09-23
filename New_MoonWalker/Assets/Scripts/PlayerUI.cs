@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerUI : MonoBehaviour
 {
-    public PlayerStats playerStats;
-    public HpBar healthBar;
-    public OxygenBar oxygenBar;
+    public Bars healthBar;
+    public Bars oxygenBar;
     public XpBar xpBar;
 
     public GameObject playerUpgradeBoard;
@@ -16,7 +15,10 @@ public class PlayerUI : MonoBehaviour
 
     public float playerHP;
     public float playerOxygen;
+    public float maxPlayerHP;
+    public float maxPlayerOxygen;
     public float playerXp;
+    public float maxPlayerXp;
     public int playerLevel;
     public int skillPoints=0;
 
@@ -27,17 +29,15 @@ public class PlayerUI : MonoBehaviour
     public Text textPlayerLevel;
     public Text textNumberOfSkillPoints;
 
-    public int speedUpHpAndEnergy;
-
     private void Awake()
     {
         BlackBoard.playerUI = this;
 
-        playerHP = playerStats.maxPlayerHP;
-        playerOxygen = playerStats.maxPlayerOxygen;
+        playerHP = maxPlayerHP;
+        playerOxygen = maxPlayerOxygen;
 
-        healthBar.SetMaxValue(playerStats.maxPlayerHP);
-        oxygenBar.SetMaxValue(playerStats.maxPlayerOxygen);
+        healthBar.SetMaxValue(maxPlayerHP);
+        oxygenBar.SetMaxValue(maxPlayerOxygen);
         xpBar.SetXp(playerXp);
 
         playerLevel = 1;
@@ -60,8 +60,6 @@ public class PlayerUI : MonoBehaviour
 
     void Update()
     {
-        textPlayerLevel.GetComponent<Text>().text = "" + playerLevel.ToString("f0");
-
         if (!BlackBoard.enterToPlaces.inSpaceShip)
         {
             OutSpaceShip();
@@ -76,11 +74,11 @@ public class PlayerUI : MonoBehaviour
 
     public void InSpaceShip()
     {
-        if (playerOxygen < playerStats.maxPlayerOxygen)
+        if (playerOxygen < maxPlayerOxygen)
         {
             playerOxygen += (plusOxygen * Time.deltaTime);
         }
-        if (playerHP < playerStats.maxPlayerHP)
+        if (playerHP < maxPlayerHP)
         {
             playerHP += (plusHP * Time.deltaTime);
         }
@@ -128,8 +126,8 @@ public class PlayerUI : MonoBehaviour
 
     public void Bars()
     {
-        healthBar.SetHealth(playerHP);
-        oxygenBar.SetOxygen(playerOxygen);
+        healthBar.SetValue(playerHP);
+        oxygenBar.SetValue(playerOxygen);
         xpBar.SetXp(playerXp);
     }
 
@@ -144,26 +142,27 @@ public class PlayerUI : MonoBehaviour
 
     public void minusHpButton()
     {
-        healthBar.SetHealth(playerHP -= 10);
+        healthBar.SetValue(playerHP -= 10);
     }
 
     public void minusOxygenButton()
     {
-        oxygenBar.SetOxygen(playerOxygen -= 10);
+        oxygenBar.SetValue(playerOxygen -= 10);
     }
 
     public void plusXpButton()
     {
         xpBar.SetXp(playerXp += 25);
-        if (playerXp >= playerStats.maxPlayerXP)
+        if (playerXp >= maxPlayerXp)
         {
             playerLevel++;
+            textPlayerLevel.GetComponent<Text>().text = "" + playerLevel.ToString("f0");
             skillPoints += 10;
             textNumberOfSkillPoints.GetComponent<Text>().text = "" + skillPoints.ToString("f0");
-            playerXp -= playerStats.maxPlayerXP;
+            playerXp -= maxPlayerXp;
             xpBar.SetXp(playerXp);
-            playerStats.maxPlayerXP *= 1.05f;
-            xpBar.slider.maxValue = playerStats.maxPlayerXP;
+            maxPlayerXp *= 1.05f;
+            xpBar.slider.maxValue = maxPlayerXp;
         }
     }
 }
